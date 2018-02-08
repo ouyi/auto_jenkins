@@ -10,3 +10,22 @@ docker build . -t docker-jenkins
 ```
 docker run -p 51000:50000 -p 9080:8080 --name docker-jenkins -e PASSWORD=admin -e USERNAME=admin docker-jenkins
 ```
+
+## Create credentials
+
+## Add node
+
+```
+https://support.apple.com/kb/PH25252?viewlocale=en_US&locale=pt_PT
+```
+
+## Create job
+
+```
+node('mac') {
+    echo 'Hello World'
+    withDockerContainer('alpine') {
+        sh 'uname -a'
+    }
+}
+```
