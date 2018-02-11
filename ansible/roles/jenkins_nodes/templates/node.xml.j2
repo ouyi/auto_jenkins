@@ -6,7 +6,7 @@
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
-  <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.17">
+  <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves">
     <host>{{ jenkins_slave.host }}</host>
     <port>{{ jenkins_slave.port }}</port>
     <credentialsId>{{ ssh_cred.id }}</credentialsId>
