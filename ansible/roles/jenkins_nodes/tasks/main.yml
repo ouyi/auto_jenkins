@@ -1,0 +1,30 @@
+
+- name: Ensure directory "{{ jenkins_master.home }}/nodes/{{ jenkins_slave.name }}" exists
+  file:
+    path: "{{ jenkins_master.home }}/nodes/{{ jenkins_slave.name }}"
+    state: directory
+
+- name: Deploy node config
+  template:
+    src: node.xml.j2
+    dest: "{{ jenkins_master.home }}/nodes/{{ jenkins_slave.name }}/config.xml"
+
+- name: Get csrf token
+  uri:
+    url: 'http://{{ jenkins_master.host }}:{{ jenkins_master.port }}/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_pass }}"
+    force_basic_auth: yes
+    return_content: yes
+  register: crumb
+
+- name: Reload config
+  uri:
+    method: POST
+    url: 'http://{{ jenkins_master.host }}:{{ jenkins_master.port }}/reload'
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_pass }}"
+    force_basic_auth: yes
+    headers:
+      Jenkins-Crumb: "{{ crumb.content.split(':')[1] }}"
+    status_code: 302

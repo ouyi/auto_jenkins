@@ -1,0 +1,7 @@
+
+jenkins_slave:
+  name: ssh_slave
+  host: localhost
+  port: 22
+  path: /var/tmp/jenkins_slave
+  label: ssh_slave_label

@@ -1,6 +1,7 @@
+
 - name: "Get csrf token"
   uri:
-    url: 'http://127.0.0.1:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+    url: 'http://{{ jenkins_master.host }}:{{ jenkins_master.port }}/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
     force_basic_auth: yes
@@ -10,7 +11,7 @@
 - name: "Create credentials"
   uri:
     method: POST
-    url: 'http://127.0.0.1:8080/credentials/store/system/domain/_/createCredentials'
+    url: 'http://{{ jenkins_master.host }}:{{ jenkins_master.port }}/credentials/store/system/domain/_/createCredentials'
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
     force_basic_auth: yes
@@ -21,10 +22,10 @@
         "": "0",
         "credentials": {
           "scope": "GLOBAL",
-          "id": "test_cred",
-          "username": "test_user",
-          "password": "test_pass",
-          "description": "My test credentials",
+          "id": "{{ ssh_cred.id }}",
+          "username": "{{ ssh_cred.username }}",
+          "password": "{{ ssh_cred.password }}",
+          "description": "{{ ssh_cred.description }}",
           "$class": "com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl"
         }
       }
