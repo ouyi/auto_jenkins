@@ -1,0 +1,47 @@
+{
+    "variables": {
+        "ansible_host": "default",
+        "ansible_connection": "docker"
+    },
+    "builders": [
+        {
+            "type": "docker",
+            "image": "jenkins/jenkins:lts-alpine",
+            "commit": "true",
+            "run_command": [ "-u", "root", "--name", "{{user `ansible_host`}}", "-d", "-i", "-t", "{{.Image}}", "/bin/sh" ],
+            "changes": [
+                "ENV JAVA_OPTS '-Djenkins.install.runSetupWizard=false'",
+                "USER 'jenkins'",
+                "ENTRYPOINT [\"/sbin/tini\", \"--\", \"/usr/local/bin/jenkins.sh\"]"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": ["apk --update add python && rm -rf /var/cache/apk/*"]
+        },
+        {
+            "type": "file",
+            "source": "security.groovy",
+            "destination": "/var/jenkins_home/init.groovy.d/security.groovy"
+        },
+        {
+            "type": "file",
+            "source": "csrf.groovy",
+            "destination": "/var/jenkins_home/init.groovy.d/csrf.groovy"
+        },
+        {
+            "type": "file",
+            "source": "plugins.txt",
+            "destination": "/var/jenkins_home/plugins.txt"
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "docker-tag",
+            "repository": "ouyi/test",
+            "tag": "0.0.1"
+        }
+    ]
+}
