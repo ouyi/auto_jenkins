@@ -24,17 +24,21 @@
         {
             "type": "file",
             "source": "security.groovy",
-            "destination": "/var/jenkins_home/init.groovy.d/security.groovy"
+            "destination": "/usr/share/jenkins/ref/init.groovy.d/security.groovy"
         },
         {
             "type": "file",
             "source": "csrf.groovy",
-            "destination": "/var/jenkins_home/init.groovy.d/csrf.groovy"
+            "destination": "/usr/share/jenkins/ref/init.groovy.d/csrf.groovy"
         },
         {
             "type": "file",
             "source": "plugins.txt",
-            "destination": "/var/jenkins_home/plugins.txt"
+            "destination": "/usr/share/jenkins/ref/plugins.txt"
+        },
+        {
+            "type": "shell",
+            "inline": ["/usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt"]
         }
     ],
     "post-processors": [
