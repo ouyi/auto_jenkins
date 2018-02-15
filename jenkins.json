@@ -22,30 +22,17 @@
             "inline": ["apk --update add python && rm -rf /var/cache/apk/*"]
         },
         {
-            "type": "file",
-            "source": "security.groovy",
-            "destination": "/usr/share/jenkins/ref/init.groovy.d/security.groovy"
-        },
-        {
-            "type": "file",
-            "source": "csrf.groovy",
-            "destination": "/usr/share/jenkins/ref/init.groovy.d/csrf.groovy"
-        },
-        {
-            "type": "file",
-            "source": "plugins.txt",
-            "destination": "/usr/share/jenkins/ref/plugins.txt"
-        },
-        {
-            "type": "shell",
-            "inline": ["/usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt"]
+            "type": "ansible",
+            "playbook_file": "./ansible/initial_setup.yml",
+            "user": "root",
+            "extra_arguments": [ "--extra-vars", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}} @ansible/extra-vars.json" ]
         }
     ],
     "post-processors": [
         {
             "type": "docker-tag",
             "repository": "ouyi/test",
-            "tag": "0.0.1"
+            "tag": "0.0.2"
         }
     ]
 }

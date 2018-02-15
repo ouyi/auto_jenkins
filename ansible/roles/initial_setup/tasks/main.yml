@@ -1,0 +1,18 @@
+
+- name: Deploy configs
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: security.groovy.j2, dest: /usr/share/jenkins/ref/init.groovy.d/security.groovy }
+    - { src: csrf.groovy.j2, dest: /usr/share/jenkins/ref/init.groovy.d/csrf.groovy }
+
+- name: Deploy plugin configs
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: plugins.txt.j2, dest: /usr/share/jenkins/ref/plugins.txt }
+
+- name: Install plugins
+  shell: /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
