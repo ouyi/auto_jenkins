@@ -1,4 +1,3 @@
 - hosts: all
   roles:
-    - { role: initial_setup }
-    - { role: jenkins_nodes }
+    - { role: jenkins_master }
