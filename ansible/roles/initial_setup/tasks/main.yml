@@ -1,5 +1,5 @@
 
-- name: Deploy configs
+- name: Deploy Groovy scripts
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -17,3 +17,13 @@
 
 - name: Install plugins
   shell: /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
+- name: Ensure directory "/usr/share/jenkins/ref/nodes/{{ jenkins_slave.name }}" exists
+  file:
+    path: "/usr/share/jenkins/ref/nodes/{{ jenkins_slave.name }}"
+    state: directory
+
+- name: Deploy node config
+  template:
+    src: node.xml.j2
+    dest: "/usr/share/jenkins/ref/nodes/{{ jenkins_slave.name }}/config.xml"
