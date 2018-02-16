@@ -1,14 +1,16 @@
 {
     "variables": {
         "ansible_host": "default",
-        "ansible_connection": "docker"
+        "ansible_connection": "docker",
+        "image_repo": "ouyi/test",
+        "image_tag": "0.0.3"
     },
     "builders": [
         {
             "type": "docker",
             "image": "jenkins/jenkins:lts-alpine",
             "commit": "true",
-            "run_command": [ "-u", "root", "--name", "{{user `ansible_host`}}", "-d", "-i", "-t", "{{.Image}}", "/bin/sh" ],
+            "run_command": [ "-u", "root", "--name", "{{user `ansible_host`}}", "-d", "-i", "-t", "{{.Image}}" ],
             "changes": [
                 "ENV JAVA_OPTS '-Djenkins.install.runSetupWizard=false'",
                 "USER 'jenkins'",
@@ -23,16 +25,16 @@
         },
         {
             "type": "ansible",
-            "playbook_file": "./ansible/initial_setup.yml",
+            "playbook_file": "./ansible/playbook.yml",
             "user": "root",
-            "extra_arguments": [ "--extra-vars", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}} @ansible/extra-vars.json" ]
+            "extra_arguments": [ "--extra-vars", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}", "--extra-vars", "@ansible/extra-vars.json", "-v" ]
         }
     ],
     "post-processors": [
         {
             "type": "docker-tag",
-            "repository": "ouyi/test",
-            "tag": "0.0.2"
+            "repository": "{{user `image_repo`}}",
+            "tag": "{{user `image_tag`}}"
         }
     ]
 }

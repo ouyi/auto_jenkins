@@ -6,6 +6,7 @@
   with_items:
     - { src: security.groovy.j2, dest: /usr/share/jenkins/ref/init.groovy.d/security.groovy }
     - { src: csrf.groovy.j2, dest: /usr/share/jenkins/ref/init.groovy.d/csrf.groovy }
+    - { src: credentials.groovy.j2, dest: /usr/share/jenkins/ref/init.groovy.d/credentials.groovy }
 
 - name: Deploy plugin configs
   template:

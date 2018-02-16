@@ -2,10 +2,7 @@
 jenkins_master:
   host: 127.0.0.1
   port: 8080
-  home: /var/jenkins_home
 
 ssh_cred:
   id: test_cred
-  username: test_user
-  password: test_pass
-  description: test_desc
+  desc: test_desc
