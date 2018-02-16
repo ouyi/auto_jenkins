@@ -8,7 +8,7 @@ docker build . -t docker-jenkins
 ## Run
 
 ```
-docker run -p 51000:50000 -p 9080:8080 --name docker-jenkins -e PASSWORD=admin -e USERNAME=admin docker-jenkins
+docker run -d -p 51000:50000 -p 9080:8080 -e PASSWORD=admin -e USERNAME=admin -e SSH_USER=$SSH_USER -e SSH_PASS=$SSH_PASS ouyi/test:0.0.3
 ```
 
 ## Create credentials
@@ -38,3 +38,9 @@ node('mac') {
 }
 ```
 
+## TODOs
+
+- Steps for adding new plugins
+- GitHub/Stash integration
+- Docker secrets
+- Mount jenkins home volume
