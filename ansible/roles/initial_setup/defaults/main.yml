@@ -1,4 +1,12 @@
 
+jenkins_master:
+  host: 127.0.0.1
+  port: 8080
+
+ssh_cred:
+  id: test_cred
+  desc: test_desc
+
 jenkins_slave:
   name: ssh_slave
   host: localhost
