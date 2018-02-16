@@ -1,4 +1,0 @@
-- hosts: all
-  roles:
-    - { role: jenkins_creds }
-    - { role: jenkins_nodes }
