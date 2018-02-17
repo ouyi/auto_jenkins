@@ -44,3 +44,6 @@ node('mac') {
 - GitHub/Stash integration
 - Docker secrets
 - Mount jenkins home volume
+- Deploy in AWS
+- Multiple slaves
+- Reverse proxy with nginx
