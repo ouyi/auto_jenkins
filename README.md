@@ -42,8 +42,8 @@ node('mac') {
 
 - Steps for adding new plugins
 - GitHub/Stash integration
+- Deploy in AWS
 - Docker secrets
 - Mount jenkins home volume
-- Deploy in AWS
 - Multiple slaves
 - Reverse proxy with nginx
