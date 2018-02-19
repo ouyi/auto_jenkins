@@ -27,7 +27,7 @@
             "type": "ansible",
             "playbook_file": "./ansible/jenkins.yml",
             "user": "root",
-            "extra_arguments": [ "-e", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}", "-e", "@ansible/extra-vars.json" ]
+            "extra_arguments": [ "-e", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}", "-e", "@ansible/extra-vars.json", "--vault-id", "ansible/vault-password.txt" ]
         }
     ],
     "post-processors": [

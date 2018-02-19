@@ -7,6 +7,10 @@ ssh_cred:
   id: test_cred
   desc: test_desc
 
+pk_cred:
+  id: test_pk_cred
+  desc: test_pk_desc
+
 jenkins_slave:
   name: ssh_slave
   host: localhost
