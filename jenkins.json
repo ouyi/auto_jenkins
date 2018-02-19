@@ -3,7 +3,7 @@
         "ansible_host": "default",
         "ansible_connection": "docker",
         "image_repo": "ouyi/test",
-        "image_tag": "0.0.3"
+        "image_tag": "0.0.4"
     },
     "builders": [
         {
