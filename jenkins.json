@@ -1,9 +1,9 @@
 {
     "variables": {
-        "ansible_host": "default",
+        "ansible_host": "ansible-host-{{ uuid }}",
         "ansible_connection": "docker",
-        "image_repo": "ouyi/test",
-        "image_tag": "0.0.6"
+        "image_repo": "ouyi/auto-jenkins",
+        "image_tag": "0.0.1"
     },
     "builders": [
         {
