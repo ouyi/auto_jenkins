@@ -1,3 +1,0 @@
-
-dependencies:
-  - { role: ssh_keys, username: jenkins, private_key: "{{ jenkins_private_key }}", public_key: "{{ jenkins_public_key }}", ssh_folder: "/usr/share/jenkins/ref/.ssh" }

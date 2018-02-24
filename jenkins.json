@@ -3,7 +3,7 @@
         "ansible_host": "default",
         "ansible_connection": "docker",
         "image_repo": "ouyi/test",
-        "image_tag": "0.0.4"
+        "image_tag": "0.0.6"
     },
     "builders": [
         {
@@ -27,7 +27,7 @@
             "type": "ansible",
             "playbook_file": "./ansible/jenkins.yml",
             "user": "root",
-            "extra_arguments": [ "-e", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}", "-e", "@ansible/extra-vars.json", "--vault-id", "ansible/vault-password.txt" ]
+            "extra_arguments": [ "-e", "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}", "-e", "@ansible/extra-vars.json"]
         }
     ],
     "post-processors": [
