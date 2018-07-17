@@ -25,17 +25,17 @@ All commands are run on the master host.
 ### Prepare the home directory for the Jenkins master and generate its SSH key pair
 
 ```
-mkdir -p /var/tmp/jenkins_home_master/.ssh
-chmod 755 /var/tmp/jenkins_home_master/.ssh
-ssh-keygen -t rsa -b 4096 -C "jenkins@example.com" -f /var/tmp/jenkins_home_master/.ssh/id_rsa
-ssh-keyscan slave.example.com >> /var/tmp/jenkins_home_master/.ssh/known_hosts
+mkdir -p /private/var/tmp/jenkins_home_master/.ssh
+chmod 755 /private/var/tmp/jenkins_home_master/.ssh
+ssh-keygen -t rsa -b 4096 -C "jenkins@example.com" -f /private/var/tmp/jenkins_home_master/.ssh/id_rsa
+ssh-keyscan slave.example.com >> /private/var/tmp/jenkins_home_master/.ssh/known_hosts
 ```
 
 ### Allow SSH onto the slave[^mac_remote_login] using the generated key pair and prepare the work direcory for the Jenkins slave[^file_sharing_docker]
 
 ```
-ssh-copy-id -f -i /var/tmp/jenkins_home_master/.ssh/id_rsa your_user@slave.example.com
-ssh -i /var/tmp/jenkins_home_master/.ssh/id_rsa your_user@slave.example.com 'mkdir -p /var/tmp/jenkins_home_slave'
+ssh-copy-id -f -i /private/var/tmp/jenkins_home_master/.ssh/id_rsa your_user@slave.example.com
+ssh -i /private/var/tmp/jenkins_home_master/.ssh/id_rsa your_user@slave.example.com 'mkdir -p /private/var/tmp/jenkins_home_slave'
 ```
 
 ### Create the extra-vars file to overwrite the defaults
@@ -47,7 +47,7 @@ cat ./ansible/extra-vars.json
     "name": "ssh_slave",
     "host": "slave.example.com",
     "port": 22,
-    "path": "/var/tmp/jenkins_home_slave",
+    "path": "/private/var/tmp/jenkins_home_slave",
     "label": "ssh_slave_label"
   },
   "pk_cred": {
@@ -71,7 +71,7 @@ cat ~/.auto-jenkins-env
 PASSWORD=admin
 USERNAME=admin
 
-docker run -d -p 8080:8080 --env-file ~/.auto-jenkins-env -v /var/tmp/jenkins_home_master:/var/jenkins_home --rm --name auto-jenkins ouyi/auto-jenkins:0.0.1
+docker run -d -p 8080:8080 --env-file ~/.auto-jenkins-env -v /private/var/tmp/jenkins_home_master:/var/jenkins_home --rm --name auto-jenkins ouyi/auto-jenkins:0.0.1
 ```
 
 ### Create a test pipeline job[^deploy_key]
@@ -95,6 +95,6 @@ node('ssh_slave_label') {
 ## Footnotes
 
 [^mac_remote_login]: Mac users might need to [allow remote login](https://support.apple.com/kb/PH25252?viewlocale=en_US&locale=pt_PT)
-[^file_sharing_docker]: Make sure the paths `/var/tmp/jenkins_home_master` and `/var/tmp/jenkins_home_slave` are added to "File sharing" under Docker preferences. 
+[^file_sharing_docker]: Make sure the paths `/private/var/tmp/jenkins_home_master` and `/private/var/tmp/jenkins_home_slave` are added to "File sharing" under Docker preferences. 
 [^packer_required]: Packer is required on the master host
 [^deploy_key]: The jenkins public key (jenkins@example.com) shall be added as deploy key to GitHub repo
